@@ -17,9 +17,10 @@
   import { handlePromiseError } from '$lib/utils';
   import { fileUploadHandler, openFileUploadDialog } from '$lib/utils/file-uploader';
   import type { AlbumResponseDto, SharedLinkResponseDto } from '@immich/sdk';
-  import { ActionButton, IconButton, Logo } from '@immich/ui';
+  import { ActionButton, IconButton } from '@immich/ui';
   import { mdiDownload, mdiFileImagePlusOutline, mdiPresentationPlay } from '@mdi/js';
   import { t } from 'svelte-i18n';
+  import { wedding } from '$lib/config/wedding';
   import ControlAppBar from '../shared-components/ControlAppBar.svelte';
   import ThemeButton from '../shared-components/ThemeButton.svelte';
   import AlbumSummary from './AlbumSummary.svelte';
@@ -72,13 +73,19 @@
   }}
 />
 
-<main class="relative h-dvh overflow-hidden px-2 pt-(--navbar-height) max-md:pt-(--navbar-height-md) md:px-6">
+<main class="wedding-gallery relative h-dvh overflow-hidden px-2 pt-(--navbar-height) max-md:pt-(--navbar-height-md) md:px-6">
   <Timeline enableRouting={true} {album} bind:timelineManager {options} assetInteraction={assetMultiSelectManager}>
-    <section class="px-2 pt-8 md:px-0 md:pt-24">
+    <section class="wedding-gallery__hero px-2 pt-8 md:px-0 md:pt-24">
       <!-- ALBUM TITLE -->
-      <h1 class="text-2xl text-primary transition-all outline-none md:text-4xl lg:text-6xl">
-        {album.albumName}
-      </h1>
+      <div class="wedding-gallery__art" aria-hidden="true">
+        <img src={wedding.heroImage} alt="" />
+      </div>
+      <p class="wedding-gallery__eyebrow">{wedding.galleryEyebrow}</p>
+      <div class="wedding-gallery__title-row">
+        <img class="wedding-gallery__monogram" src={wedding.monogramImage} alt="" />
+        <h1 class="wedding-gallery__title transition-all outline-none">{album.albumName}</h1>
+      </div>
+      <div class="wedding-gallery__meta"><span>{wedding.couple}</span><span>{wedding.date}</span></div>
 
       {#if album.assetCount > 0}
         <AlbumSummary {album} />
@@ -87,7 +94,7 @@
       <!-- ALBUM DESCRIPTION -->
       {#if album.description}
         <p
-          class="mt-6 mb-12 w-full pb-2 text-start text-base font-medium whitespace-pre-line text-black dark:text-gray-300"
+          class="wedding-gallery__description mt-6 mb-12 w-full pb-2 text-start whitespace-pre-line"
         >
           {album.description}
         </p>
@@ -107,8 +114,9 @@
   {:else}
     <ControlAppBar>
       {#snippet leading()}
-        <a data-sveltekit-preload-data="hover" class="ms-4" href="/">
-          <Logo variant={mediaQueryManager.maxMd ? 'icon' : 'inline'} class="min-w-10" />
+        <a data-sveltekit-preload-data="hover" class="wedding-wordmark ms-4" href="/" aria-label={wedding.couple}>
+          <img src={wedding.monogramImage} alt="" />
+          {#if !mediaQueryManager.maxMd}<span>{wedding.couple}</span>{/if}
         </a>
       {/snippet}
 

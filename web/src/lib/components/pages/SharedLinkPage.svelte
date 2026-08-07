@@ -9,9 +9,10 @@
   import { handleError } from '$lib/utils/handle-error';
   import { navigate } from '$lib/utils/navigation';
   import { sharedLinkLogin, SharedLinkType, type AssetResponseDto, type SharedLinkResponseDto } from '@immich/sdk';
-  import { Button, Logo, PasswordInput } from '@immich/ui';
+  import { Button, PasswordInput } from '@immich/ui';
   import { onDestroy, tick } from 'svelte';
   import { t } from 'svelte-i18n';
+  import { wedding } from '$lib/config/wedding';
 
   type Props = {
     data: {
@@ -74,27 +75,27 @@
   <meta name="description" content={description} />
 </svelte:head>
 {#if passwordRequired}
-  <main
-    class="relative h-dvh overflow-hidden px-6 pt-(--navbar-height) max-md:pt-(--navbar-height-md) sm:px-12 md:px-24 lg:px-40"
-  >
-    <div class="mt-20 flex flex-col items-center justify-center">
-      <div class="text-2xl font-bold text-primary">{$t('password_required')}</div>
-      <div class="mt-4 text-lg text-primary">
-        {$t('sharing_enter_password')}
-      </div>
-      <div class="mt-4">
-        <form class="flex gap-x-2" novalidate {onsubmit}>
-          <PasswordInput autocomplete="off" bind:value={password} placeholder="Password" />
-          <Button type="submit">{$t('submit')}</Button>
-        </form>
-      </div>
+  <main class="wedding-gate relative min-h-dvh overflow-hidden px-6 pt-(--navbar-height) sm:px-12 md:px-24 lg:px-40">
+    <div class="wedding-gate__image" aria-hidden="true"><img src={wedding.heroImage} alt="" /></div>
+    <div class="wedding-gate__veil"></div>
+    <div class="wedding-gate__content">
+      <p class="wedding-gate__eyebrow">{wedding.invitation}</p>
+      <img class="wedding-gate__monogram" src={wedding.monogramImage} alt="" />
+      <h1>Nosso<br />álbum</h1>
+      <p>{wedding.couple}<br />{wedding.date}</p>
+      <form class="wedding-gate__form" novalidate {onsubmit}>
+        <PasswordInput autocomplete="off" bind:value={password} placeholder="Senha do convite" />
+        <Button type="submit">Entrar</Button>
+      </form>
+      <p class="wedding-gate__footnote">{wedding.venue}<br />{wedding.address}</p>
     </div>
   </main>
   <header>
     <ControlAppBar>
       {#snippet leading()}
-        <a data-sveltekit-preload-data="hover" class="ms-4" href="/">
-          <Logo variant="inline" />
+        <a data-sveltekit-preload-data="hover" class="wedding-wordmark ms-4" href="/" aria-label={wedding.couple}>
+          <img src={wedding.monogramImage} alt="" />
+          <span>{wedding.couple}</span>
         </a>
       {/snippet}
 
