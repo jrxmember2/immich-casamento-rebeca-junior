@@ -296,3 +296,42 @@
     }
   }
 }
+/* A composição mobile mantém a foto como uma camada de fundo do título. */
+@layer components {
+  .wedding-gallery__hero > :not(.wedding-gallery__art) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .wedding-gallery__art {
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 640px) {
+    .wedding-gallery__hero {
+      min-height: 25rem;
+      padding-right: 0;
+    }
+
+    .wedding-gallery__art {
+      position: absolute;
+      top: 2rem;
+      right: -.35rem;
+      width: min(48vw, 12.25rem);
+      margin: 0;
+      opacity: .86;
+    }
+
+    .wedding-gallery__title-row {
+      width: 100%;
+      padding-right: .75rem;
+    }
+
+    .wedding-gallery__title {
+      max-width: 9ch;
+      font-size: clamp(2.8rem, 13.2vw, 4.55rem);
+      text-shadow: 0 .1rem 1.25rem rgb(242 238 229 / 88%);
+    }
+  }
+}
