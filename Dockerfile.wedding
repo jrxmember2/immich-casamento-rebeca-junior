@@ -1,0 +1,28 @@
+# Compila somente a interface personalizada e usa o servidor oficial pronto.
+# Isso evita baixar/compilar CLI e ferramentas de plugins no servidor da VPS.
+FROM ghcr.io/immich-app/base-server-dev:202607211135@sha256:83c9ff3f7390111596a2dcd24a746c3f8618d58259dbc7aae36618d153462f18 AS web-builder
+
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
+  CI=1 \
+  COREPACK_HOME=/tmp \
+  PNPM_HOME=/buildcache/pnpm-store \
+  PATH="/buildcache/pnpm-store:$PATH"
+
+RUN npm install --global corepack@latest && \
+  corepack enable pnpm && \
+  pnpm config set store-dir "$PNPM_HOME"
+
+WORKDIR /usr/src/app
+COPY package.json .pnpmfile.cjs pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY web ./web/
+COPY i18n ./i18n/
+COPY packages ./packages/
+
+RUN --mount=type=cache,id=pnpm-web,target=/buildcache/pnpm-store \
+  SHARP_IGNORE_GLOBAL_LIBVIPS=true pnpm --filter @immich/sdk --filter immich-web install --frozen-lockfile --force && \
+  pnpm --filter @immich/sdk --filter immich-web build
+
+# O Immich oficial traz o servidor, CLI e plugins já compilados.
+FROM ghcr.io/immich-app/immich-server:v3
+
+COPY --from=web-builder /usr/src/app/web/build /build/www
