@@ -194,3 +194,105 @@
   @media(max-width:640px){.wedding-gallery__hero{padding-right:0}.wedding-gallery__art{top:1.5rem;right:0;width:6.75rem}.wedding-gallery__title{max-width:10ch;font-size:clamp(3rem,16vw,5rem)}.wedding-gallery__meta{flex-direction:column;gap:.35rem}.wedding-gate__form{flex-direction:column}.wedding-gate__form input,.wedding-gate__form button{width:100%}}
   @media(prefers-reduced-motion:no-preference){@keyframes wedding-rise{from{opacity:0;transform:translateY(1.2rem)}to{opacity:1;transform:translateY(0)}}}
 }
+/* Ajustes de composição para o álbum público, especialmente em telas pequenas. */
+@layer components {
+  .wedding-gallery__hero {
+    min-height: clamp(23rem, 34vw, 34rem);
+    padding-right: clamp(10rem, 22vw, 18rem);
+  }
+
+  .wedding-gallery__art {
+    top: 1.5rem;
+    right: clamp(.25rem, 2vw, 2rem);
+    width: clamp(8rem, 18vw, 14rem);
+  }
+
+  .wedding-gallery__title {
+    max-width: 10ch;
+    font-size: clamp(3rem, 7.2vw, 6.9rem);
+    line-height: .88;
+  }
+
+  .wedding-upload-cta {
+    display: grid;
+    width: min(100%, 28rem);
+    gap: .25rem;
+    margin-top: 2rem;
+    padding: 1rem 1.15rem 1.05rem;
+    overflow: hidden;
+    border: 1px solid rgb(32 55 46 / 15%);
+    border-radius: .35rem 2.2rem .35rem .35rem;
+    background: var(--wedding-ink);
+    color: var(--wedding-paper);
+    text-align: left;
+    box-shadow: 0 1rem 2.25rem rgb(32 55 46 / 16%);
+    transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+  }
+
+  .wedding-upload-cta:hover {
+    background: #2c4d40;
+    box-shadow: 0 1.3rem 3rem rgb(32 55 46 / 24%);
+    transform: translateY(-.2rem);
+  }
+
+  .wedding-upload-cta:focus-visible {
+    outline: 2px solid var(--wedding-accent);
+    outline-offset: 4px;
+  }
+
+  .wedding-upload-cta__eyebrow {
+    color: rgb(242 238 229 / 70%);
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .wedding-upload-cta__label {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+    line-height: 1.08;
+  }
+
+  .wedding-upload-cta__label span {
+    display: inline-block;
+    margin-left: .3rem;
+    color: #e5b99b;
+    transition: transform 220ms ease;
+  }
+
+  .wedding-upload-cta:hover .wedding-upload-cta__label span {
+    transform: translate(.2rem, -.2rem);
+  }
+
+  .wedding-upload-cta__hint {
+    margin-top: .25rem;
+    color: rgb(242 238 229 / 76%);
+    font-size: .73rem;
+  }
+
+  @media (max-width: 640px) {
+    .wedding-gallery__hero {
+      min-height: 0;
+      padding-right: 0;
+    }
+
+    .wedding-gallery__art {
+      position: relative;
+      top: auto;
+      right: auto;
+      width: 8.25rem;
+      margin: 0 0 1.75rem auto;
+    }
+
+    .wedding-gallery__title {
+      max-width: 9ch;
+      font-size: clamp(2.9rem, 14vw, 4.9rem);
+    }
+
+    .wedding-upload-cta {
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+  }
+}

@@ -87,6 +87,18 @@
       </div>
       <div class="wedding-gallery__meta"><span>{wedding.couple}</span><span>{wedding.date}</span></div>
 
+      {#if sharedLink.allowUpload}
+        <button
+          class="wedding-upload-cta"
+          type="button"
+          onclick={() => openFileUploadDialog({ albumId: album.id })}
+        >
+          <span class="wedding-upload-cta__eyebrow">Você registrou um momento especial?</span>
+          <span class="wedding-upload-cta__label">Enviar fotos para Rebeca &amp; Junior <span aria-hidden="true">↗</span></span>
+          <span class="wedding-upload-cta__hint">Clique aqui para selecionar fotos ou vídeos</span>
+        </button>
+      {/if}
+
       {#if album.assetCount > 0}
         <AlbumSummary {album} />
       {/if}
