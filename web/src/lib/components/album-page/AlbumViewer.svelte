@@ -82,7 +82,6 @@
       </div>
       <p class="wedding-gallery__eyebrow">{wedding.galleryEyebrow}</p>
       <div class="wedding-gallery__title-row">
-        <img class="wedding-gallery__monogram" src={wedding.monogramImage} alt="" />
         <h1 class="wedding-gallery__title transition-all outline-none">{album.albumName}</h1>
       </div>
       <div class="wedding-gallery__meta"><span>{wedding.couple}</span><span>{wedding.date}</span></div>
